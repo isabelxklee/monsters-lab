@@ -52,20 +52,47 @@ function nextPage() {
 }
 
 function createMonsterForm() {
+  let form = document.createElement("form")
+
   let nameInput = document.createElement("input")
   nameInput.placeholder = "Name" 
+  nameInput.name = "name"
   nameInput.autocomplete = "off"
 
   let ageInput = document.createElement("input")
-  ageInput.placeholder = "Age" 
+  ageInput.placeholder = "Age"
+  ageInput.name = "age" 
   ageInput.autocomplete = "off"
 
   let descriptionInput = document.createElement("input")
   descriptionInput.placeholder = "Description" 
+  descriptionInput.name = "description"
   descriptionInput.autocomplete = "off"
 
   let submitButton = document.createElement("button")
   submitButton.innerText = "Create Monster"
+  submitButton.type = "submit"
 
-  createMonsterContainer.append(nameInput, ageInput, descriptionInput, submitButton)
+  form.append(nameInput, ageInput, descriptionInput, submitButton)
+  createMonsterContainer.append(form)
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault()
+
+    fetch(monstersURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: event.target.name.value,
+        age: event.target.age.value,
+        description: event.target.description.value
+      })
+    })
+    .then(r => r.json())
+    .then(() => {
+      
+    })
+  })
 }
