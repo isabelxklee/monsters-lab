@@ -91,8 +91,9 @@ function createMonsterForm() {
       })
     })
     .then(r => r.json())
-    .then(() => {
-      
+    .then((newMonster) => {
+      event.target.reset()
+      renderMonster(newMonster)
     })
   })
 }
